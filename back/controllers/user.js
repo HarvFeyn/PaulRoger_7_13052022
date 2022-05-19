@@ -17,8 +17,30 @@ exports.signup = (req, res, next) => {
       .catch(error => res.status(500).json({ error }));
 }
 
+// request to login a user
 exports.login = (req, res, next) => {
-  return dbmodel.getAllUsers()
-    .then((result) => res.status(200).json(result))
-    .catch(error => res.status(400).json({ error }))
-}
+  console.log(req.query);
+  dbmodel.findemail(req.query.email)
+    .then(userfind => {
+      if (userfind<=0) {
+        return res.status(401).json({ error: 'Utilisateur non trouvé !' });
+      }
+      dbmodel.testpassword(req.query.email, req.query.password)
+        .then(valid => {
+          if (!valid) {
+            return res.status(401).json({ error: 'Mot de passe incorrect !' });
+          }
+          console.log("user connected");
+          res.status(200).json({
+            userId: userfind,
+            token: jwt.sign(
+              { userId: userfind },
+              'RANDOM_TOKEN_SECRET',
+              { expiresIn: '24h' }
+            )
+          });
+        })
+        .catch(error => res.status(500).json({ error }));
+    })
+    .catch(error => res.status(500).json({ error }));
+};
