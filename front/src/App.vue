@@ -3,9 +3,23 @@
         <div id="nav">
           <router-link to="/">Home</router-link>
           <router-link to="/login">Login</router-link>
-          <router-link to="/register">Register</router-link>
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Register
+          </button>
         </div>
-        <router-view/>
+        <main>
+          <transition name="fade">
+            <router-view />
+          </transition>
+          <!-- Modal -->
+          <Modal
+            :value="value"
+            :options="modalOptions"
+            :is-form="isForm"
+            :component="component"
+          />
+        </main>
     </div>
 </template>
 
@@ -13,7 +27,9 @@
 
 </script>
 
-<style>
+<style lang="scss">
+  @import "./scss/custom.scss";
+
   #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -21,13 +37,5 @@
     text-align: center;
     color: #3e33d8;
     margin-top: 0px;
-  }
-
-  #nav {
-    background-color: rgb(228, 205, 172);
-    padding: 10px;
-    margin-top: 0%;
-    display: flex;
-    justify-content: space-around;
   }
 </style>
