@@ -56,7 +56,7 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button class="btn btn-primary" @click="test">Login</button>
+                    <button class="btn btn-primary" @click="test()">Login</button>
                 </div>
                 </div>
             </div>
@@ -70,6 +70,9 @@ const auth = import('../API/auth')
 
   export default {
     name: 'home',
+    data() {
+        return {}
+    },
     methods: {
       test() {
         console.log("mdr")
