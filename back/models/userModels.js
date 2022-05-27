@@ -2,10 +2,17 @@ const dbpool = require("../helpers/dbpool")
 const jwt = require('jsonwebtoken');
 const bcrypt = require("bcrypt");
 const { query } = require("express");
+const { createPool } = require("mysql2");
 
-exports.saveUser = (user) => {
-    console.log("saving new user : " + user.email);
-    dbpool.query("INSERT INTO users (name, email, password) VALUES ('name', ?, ?)", [user.email, user.password]);
+exports.saveUser = async (user) => {
+    const findIdByEmail = await dbpool.query("SELECT id FROM users WHERE email = ?", [user.email]);
+    if(findIdByEmail.length==0){
+        console.log("saving new user : " + user.email);
+        dbpool.query("INSERT INTO users (name, email, password) VALUES ('name', ?, ?)", [user.email, user.password]);
+    }
+    else{
+        console.log("can't save new user, this email already exist ");
+    }
 };
 
 exports.findemail = async (email) => {
