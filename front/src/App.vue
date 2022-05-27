@@ -1,25 +1,31 @@
 <template>
     <div id="app">
-        <div id="nav">
-          <router-link to="/">Home</router-link>
-          <router-link to="/login">Login</router-link>
-          <!-- Button trigger modal -->
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          Register
+      <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+          <router-link class="navbar-brand" to="/">Groupomania</router-link>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
           </button>
+          <div class="collapse navbar-collapse" id="navbarLogReg">
+            <div class="navbar-nav ms-auto">
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerModal">Register</button>
+            </div>
+          </div>
         </div>
-        <main>
-          <transition name="fade">
-            <router-view />
-          </transition>
-          <!-- Modal -->
-          <Modal
-            :value="value"
-            :options="modalOptions"
-            :is-form="isForm"
-            :component="component"
-          />
-        </main>
+      </nav>
+      <main>
+        <transition name="fade">
+          <router-view />
+        </transition>
+        <!-- Modal -->
+        <Modal
+          :value="value"
+          :options="modalOptions"
+          :is-form="isForm"
+          :component="component"
+        />
+      </main>
     </div>
 </template>
 
