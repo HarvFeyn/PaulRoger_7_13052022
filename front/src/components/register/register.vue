@@ -1,6 +1,6 @@
 <template>
     <div class="register">
-        <!-- Modal -->
+        <!-- Register Modal -->
         <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -23,14 +23,11 @@
                             <label for="password">Enter your password: </label>
                             <input type="password" name="password" id="password" required>
                         </div>
-                        <div class="form-register">
-                            <input type="submit" value="Subscribe!">
-                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-primary">Register</button>
                 </div>
                 </div>
             </div>
@@ -40,10 +37,10 @@
 
 <script>
 export default {
-  name: 'register',
-  props: {
-
-  }
+    name: 'register',
+    data() {
+        return {}
+    },
 }
 </script>
 

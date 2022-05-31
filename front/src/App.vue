@@ -18,19 +18,13 @@
         <transition name="fade">
           <router-view />
         </transition>
-        <!-- Modal -->
-        <Modal
-          :value="value"
-          :options="modalOptions"
-          :is-form="isForm"
-          :component="component"
-        />
       </main>
     </div>
 </template>
 
 <script>
-
+import register from './components/register/register.vue'
+import('./components/login/login.vue');
 </script>
 
 <style lang="scss">
