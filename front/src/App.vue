@@ -8,8 +8,8 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarLogReg">
             <div class="navbar-nav ms-auto">
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerModal">Register</button>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal" @click="login()">Login</button>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal" @click="register()">Register</button>
             </div>
           </div>
         </div>
@@ -18,13 +18,39 @@
         <transition name="fade">
           <router-view />
         </transition>
+        <!-- Modal -->
+        <Modal :component="component" :isForm="isForm" />
       </main>
     </div>
 </template>
 
 <script>
-import register from './components/register/register.vue'
-import('./components/login/login.vue');
+import Register from './components/register/register.vue'
+import Login from './components/login/login.vue'
+import Modal from './components/modal.vue'
+
+export default {
+  name: 'App',
+  components: {
+    Modal
+  },
+  data () {
+    return {
+      component: undefined,
+      isForm: true
+    }
+  },
+  methods: {
+    register () {
+      this.component = Register
+      this.isForm = true
+    },
+    login () {
+      this.component = Login
+      this.isForm = true
+    }
+  }
+}
 </script>
 
 <style lang="scss">

@@ -39,6 +39,9 @@ const config = {
   },
   mode: buildingForLocal() ? 'development' : 'production',
   devServer: {
+    proxy: {
+      '/api': 'http://localhost:3000'
+    },
     historyApiFallback: true,
     noInfo: false
   },
