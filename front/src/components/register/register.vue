@@ -16,6 +16,7 @@
             </div>
             <div class="row mb-3">
                 <button type="submit" class="btn btn-primary">Register</button>
+                <p>{{ messageSubmit }}</p>
             </div>
         </form>
     </div>
@@ -27,12 +28,16 @@ const auth = require('../API/auth')
     export default {
         name: 'Register',
         data() {
-            return {}
+            return {
+                messageSubmit: ''
+            }
         },
         methods: {
             submitRegister (event) {
                 event.preventDefault()
-                auth.signup({name: event.target.elements.name.value, email: event.target.elements.email.value, password: event.target.elements.password.value});
+                auth.signup({name: event.target.elements.name.value, email: event.target.elements.email.value, password: event.target.elements.password.value})
+                    .then(result => {this.messageSubmit='Votre compte a bien était enrigistré.'})
+                    .catch(error => {this.messageSubmit='Nom ou email déjà utilisé.'})
             }
         }
     }
