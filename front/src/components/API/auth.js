@@ -1,7 +1,7 @@
 const apiHandler = require('./APIHandler')
 // eslint-disable-next-line no-undef
 const url = `${API_URL}/auth`
-const signinUrl = `${url}/signin`
+const signinUrl = `${url}/login`
 const signupUrl = `${url}/signup`
 
 module.exports = {
