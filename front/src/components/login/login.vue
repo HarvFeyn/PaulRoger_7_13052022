@@ -12,21 +12,28 @@
             </div>
             <div class="row mb-3">
                 <button type="submit" class="btn btn-primary">Login</button>
+                <p>{{ messageSubmit }}</p>
             </div>
         </form>
     </div>
 </template>
 
 <script>
+const auth = require('../API/auth')
     export default {
         name: 'Login',
         data() {
-            return {}
+            return {
+                messageSubmit: ''
+            }
         },
         methods: {
             test (event) {
                 event.preventDefault()
-                console.log("mdr Login")
+                console.log("Login")
+                auth.signin(event.target.elements.email.value, event.target.elements.password.value)    
+                    .then(result => {console.log(result)})
+                    .catch(this.messageSubmit="email ou mot de passe incorrect")
             }
         }
     }
