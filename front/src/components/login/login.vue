@@ -20,6 +20,7 @@
 
 <script>
 const auth = require('../API/auth')
+
     export default {
         name: 'Login',
         data() {
@@ -32,7 +33,10 @@ const auth = require('../API/auth')
                 event.preventDefault()
                 console.log("Login")
                 auth.signin(event.target.elements.email.value, event.target.elements.password.value)    
-                    .then(result => {console.log(result)})
+                    .then(result => {
+                        console.log(result.data.token)
+                        this.$store.dispatch('CONNECTION', {user: event.target.elements.email.value, token: result.data.token})
+                    })
                     .catch(this.messageSubmit="email ou mot de passe incorrect")
             }
         }
