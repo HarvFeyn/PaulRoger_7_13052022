@@ -24,7 +24,6 @@
 
 <script>
 const auth = require('../API/auth')
-
     export default {
         name: 'Register',
         data() {
