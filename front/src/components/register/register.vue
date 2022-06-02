@@ -1,7 +1,7 @@
 <template>
     <div id="register">
         <p>Register:</p>
-        <form @submit="test" class="form-register">
+        <form @submit="submitRegister" class="form-register">
             <div class="form-register">
                 <label for="name">Enter your name: </label>
                 <input type="text" name="name" id="name" required>
@@ -30,10 +30,9 @@ const auth = require('../API/auth')
             return {}
         },
         methods: {
-            test (event) {
+            submitRegister (event) {
                 event.preventDefault()
-                console.log("mdr register")
-                auth.signup({email: "emailtestlol", password: "password"});
+                auth.signup({email: event.target.elements.email.value, password: event.target.elements.password.value});
             }
         }
     }
