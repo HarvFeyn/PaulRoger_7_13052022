@@ -8,7 +8,7 @@ exports.saveUser = async (user) => {
     const findIdByEmail = await dbpool.query("SELECT id FROM users WHERE email = ?", [user.email]);
     if(findIdByEmail.length==0){
         console.log("saving new user : " + user.email);
-        dbpool.query("INSERT INTO users (name, email, password) VALUES ('name', ?, ?)", [user.email, user.password]);
+        dbpool.query("INSERT INTO users (name, email, password, isAdmin) VALUES (?, ?, ?, ?)", [user.name, user.email, user.password, false]);
     }
     else{
         console.log("can't save new user, this email already exist ");
