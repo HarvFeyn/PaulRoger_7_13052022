@@ -7,7 +7,7 @@ const { createPool } = require("mysql2");
 exports.saveUser = async (user) => {
 
     console.log("saving new user : " + user.email);
-    return dbpool.query("INSERT INTO users (name, email, password) VALUES ('name', ?, ?)", [user.email, user.password])
+    return dbpool.query("INSERT INTO users (name, email, password, isAdmin) VALUES (?, ?, ?, false)", [user.name, user.email, user.password])
         .then(result => {
             console.log('created user:', { id: result.insertId, ...newUser })
             return { id: result.insertId, ...newUser }

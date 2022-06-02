@@ -32,7 +32,7 @@ const auth = require('../API/auth')
         methods: {
             submitRegister (event) {
                 event.preventDefault()
-                auth.signup({email: event.target.elements.email.value, password: event.target.elements.password.value});
+                auth.signup({name: event.target.elements.name.value, email: event.target.elements.email.value, password: event.target.elements.password.value});
             }
         }
     }
