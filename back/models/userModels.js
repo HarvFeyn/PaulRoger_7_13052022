@@ -5,14 +5,13 @@ const { query } = require("express");
 const { createPool } = require("mysql2");
 
 exports.saveUser = async (user) => {
-    const findIdByEmail = await dbpool.query("SELECT id FROM users WHERE email = ?", [user.email]);
-    if(findIdByEmail.length==0){
-        console.log("saving new user : " + user.email);
-        dbpool.query("INSERT INTO users (name, email, password, isAdmin) VALUES (?, ?, ?, ?)", [user.name, user.email, user.password, false]);
-    }
-    else{
-        console.log("can't save new user, this email already exist ");
-    }
+
+    console.log("saving new user : " + user.email);
+    return dbpool.query("INSERT INTO users (name, email, password, isAdmin) VALUES (?, ?, ?, false)", [user.name, user.email, user.password])
+        .then(result => {
+            console.log('created user:', { id: result.insertId, ...newUser })
+            return { id: result.insertId, ...newUser }
+        })
 };
 
 exports.findemail = async (email) => {
