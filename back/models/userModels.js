@@ -1,26 +1,25 @@
-const dbpool = require("../helpers/dbpool")
+const query = require("../helpers/dbpool").query
 const jwt = require('jsonwebtoken');
 const bcrypt = require("bcrypt");
-const { query } = require("express");
-const { createPool } = require("mysql2");
 
-exports.saveUser = async (user) => {
+exports.saveUser = (user) => {
 
     console.log("saving new user : " + user.email);
-    return dbpool.query("INSERT INTO users (name, email, password, isAdmin) VALUES (?, ?, ?, false)", [user.name, user.email, user.password])
+    return query("INSERT INTO users (name, email, password, isAdmin) VALUES (?, ?, ?, false)", [user.name, user.email, user.password])
         .then(result => {
-            console.log('created user:', { id: result.insertId, ...newUser })
-            return { id: result.insertId, ...newUser }
+            console.log('created user')
+            return {message: "ok"}
         })
 };
 
 exports.findemail = async (email) => {
-    const findIdByEmail = await dbpool.query("SELECT id FROM users WHERE email = ?", [email]);
-    return findIdByEmail
+    const findUserByEmail = await query("SELECT * FROM users WHERE email = ?", [email]);
+    return findUserByEmail[0]
 };
 
+
 exports.testpassword = async (email, password) => {
-    const findPWByEmail = await dbpool.query("SELECT password FROM users WHERE email = ?", [email]);
+    const findPWByEmail = await query("SELECT password FROM users WHERE email = ?", [email]);
 
     const testpassword = await bcrypt.compare(password, findPWByEmail[0].password);
 
