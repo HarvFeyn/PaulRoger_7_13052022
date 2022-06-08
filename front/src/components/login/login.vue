@@ -1,7 +1,7 @@
 <template>
     <div id="login">
         <p>Login:</p>
-        <form @submit="test" class="form-register">
+        <form @submit="login" class="form-register">
             <div class="form-register">
                 <label for="email">Enter your email: </label>
                 <input type="email" name="email" id="email" required>
@@ -29,7 +29,7 @@ const auth = require('../API/auth')
             }
         },
         methods: {
-            test (event) {
+            login (event) {
                 event.preventDefault()
                 console.log("Login")
                 auth.signin(event.target.elements.email.value, event.target.elements.password.value)    
