@@ -53,6 +53,10 @@ export default {
     login () {
       this.component = Login
       this.isForm = true
+    },
+    logout () {
+      console.log("logout")
+      this.$store.dispatch('DISCONNECT')
     }
   }
 }
