@@ -4,10 +4,11 @@ const dbmodel = require('../models/userModels');
 
 // request to sign up a user
 exports.signup = (req, res, next) => {
-  bcrypt.hash(req.query.password, 10)
+  bcrypt.hash(req.body.password, 10)
       .then(hash => {
         const user = {
-            email: req.query.email,
+            name: req.body.name,
+            email: req.body.email,
             password: hash
         };
         dbmodel.saveUser(user)
@@ -19,13 +20,13 @@ exports.signup = (req, res, next) => {
 
 // request to login a user
 exports.login = (req, res, next) => {
-  console.log(req.query);
-  dbmodel.findemail(req.query.email)
+  console.log(req.body);
+  dbmodel.findemail(req.body.email)
     .then(userfind => {
       if (userfind<=0) {
         return res.status(401).json({ error: 'Utilisateur non trouvé !' });
       }
-      dbmodel.testpassword(req.query.email, req.query.password)
+      dbmodel.testpassword(req.body.email, req.body.password)
         .then(valid => {
           if (!valid) {
             return res.status(401).json({ error: 'Mot de passe incorrect !' });

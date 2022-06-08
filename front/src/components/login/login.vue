@@ -1,29 +1,46 @@
 <template>
-    <div class="login">
+    <div id="login">
         <p>Login:</p>
-        <form action="" method="get" class="form-register">
+        <form @submit="test" class="form-register">
             <div class="form-register">
-                <label for="name">Enter your name: </label>
-                <input type="text" name="name" id="name" required>
+                <label for="email">Enter your email: </label>
+                <input type="email" name="email" id="email" required>
             </div>
             <div class="form-register">
                 <label for="password">Enter your password: </label>
                 <input type="password" name="password" id="password" required>
             </div>
-            <div class="form-register">
-                <input type="submit" value="Subscribe!">
+            <div class="row mb-3">
+                <button type="submit" class="btn btn-primary">Login</button>
+                <p>{{ messageSubmit }}</p>
             </div>
         </form>
     </div>
 </template>
 
 <script>
-export default {
-  name: 'login',
-  props: {
+const auth = require('../API/auth')
 
-  }
-}
+    export default {
+        name: 'Login',
+        data() {
+            return {
+                messageSubmit: ''
+            }
+        },
+        methods: {
+            test (event) {
+                event.preventDefault()
+                console.log("Login")
+                auth.signin(event.target.elements.email.value, event.target.elements.password.value)    
+                    .then(result => {
+                        console.log(result.data.token)
+                        this.$store.dispatch('CONNECTION', {user: event.target.elements.email.value, token: result.data.token})
+                    })
+                    .catch(this.messageSubmit="email ou mot de passe incorrect")
+            }
+        }
+    }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
