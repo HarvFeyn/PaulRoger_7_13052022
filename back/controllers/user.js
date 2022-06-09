@@ -20,10 +20,9 @@ exports.signup = (req, res, next) => {
 
 // request to login a user
 exports.login = (req, res, next) => {
-  console.log(req.body);
   dbmodel.findemail(req.body.email)
     .then(userfind => {
-      if (userfind<=0) {
+      if (userfind.id<=0) {
         return res.status(401).json({ error: 'Utilisateur non trouvé !' });
       }
       dbmodel.testpassword(req.body.email, req.body.password)
@@ -33,7 +32,9 @@ exports.login = (req, res, next) => {
           }
           console.log("user connected");
           res.status(200).json({
-            userId: userfind,
+            userId: userfind.id,
+            userName: userfind.name,
+            userEmail: userfind.email,
             token: jwt.sign(
               { userId: userfind },
               'RANDOM_TOKEN_SECRET',

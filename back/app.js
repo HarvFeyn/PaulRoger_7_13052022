@@ -1,5 +1,6 @@
 const express = require('express');
 const userRoutes = require('./routes/user');
+const articleRoutes = require('./routes/article');
 
 const app = express();
 
@@ -13,5 +14,6 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 app.use('/api/auth', userRoutes);
+app.use('/api/article', articleRoutes);
 
 module.exports = app;

@@ -8,8 +8,10 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarLogReg">
             <div class="navbar-nav ms-auto">
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal" @click="login()">Login</button>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal" @click="register()">Register</button>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal" @click="login()" v-if="!authenticated">Login</button>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal" @click="register()" v-if="!authenticated">Register</button>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal" @click="article()" v-if="authenticated">Create new article</button>
+              <button type="button" class="btn btn-primary" @click="logout()" v-if="authenticated">Logout</button>
             </div>
           </div>
         </div>
@@ -28,6 +30,8 @@
 import Register from './components/register/register.vue'
 import Login from './components/login/login.vue'
 import Modal from './components/modal.vue'
+import Article from './components/article/modal/article.vue'
+import { mapState } from 'vuex'
 
 export default {
   name: 'App',
@@ -40,6 +44,9 @@ export default {
       isForm: true
     }
   },
+  computed: {
+    ...mapState(['authenticated'])
+  },
   methods: {
     register () {
       this.component = Register
@@ -47,6 +54,14 @@ export default {
     },
     login () {
       this.component = Login
+      this.isForm = true
+    },
+    logout () {
+      console.log("logout")
+      this.$store.dispatch('DISCONNECT')
+    },
+    article () {
+      this.component = Article
       this.isForm = true
     }
   }

@@ -1,7 +1,7 @@
 <template>
     <div id="login">
         <p>Login:</p>
-        <form @submit="test" class="form-register">
+        <form @submit="login" class="form-register">
             <div class="form-register">
                 <label for="email">Enter your email: </label>
                 <input type="email" name="email" id="email" required>
@@ -29,13 +29,11 @@ const auth = require('../API/auth')
             }
         },
         methods: {
-            test (event) {
+            login (event) {
                 event.preventDefault()
-                console.log("Login")
                 auth.signin(event.target.elements.email.value, event.target.elements.password.value)    
                     .then(result => {
-                        console.log(result.data.token)
-                        this.$store.dispatch('CONNECTION', {user: event.target.elements.email.value, token: result.data.token})
+                        this.$store.dispatch('CONNECTION', {user: { token: result.data.token, name: result.data.userName, email: result.data.userEmail, id: result.data.userId }})
                     })
                     .catch(this.messageSubmit="email ou mot de passe incorrect")
             }
