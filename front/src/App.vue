@@ -10,6 +10,7 @@
             <div class="navbar-nav ms-auto">
               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal" @click="login()" v-if="!authenticated">Login</button>
               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal" @click="register()" v-if="!authenticated">Register</button>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal" @click="article()" v-if="authenticated">Create new article</button>
               <button type="button" class="btn btn-primary" @click="logout()" v-if="authenticated">Logout</button>
             </div>
           </div>
@@ -29,6 +30,7 @@
 import Register from './components/register/register.vue'
 import Login from './components/login/login.vue'
 import Modal from './components/modal.vue'
+import Article from './components/article/modal/article.vue'
 import { mapState } from 'vuex'
 
 export default {
@@ -57,6 +59,10 @@ export default {
     logout () {
       console.log("logout")
       this.$store.dispatch('DISCONNECT')
+    },
+    article () {
+      this.component = Article
+      this.isForm = true
     }
   }
 }
