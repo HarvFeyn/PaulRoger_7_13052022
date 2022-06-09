@@ -8,7 +8,6 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     authenticated: false,
-    authToken: '',
     user: {}
   },
   getters: {
@@ -20,12 +19,6 @@ export default new Vuex.Store({
     AUTH_CONNECT (state) {
       state.authenticated = true
     },
-    NEW_TOKEN (state, token) {
-      state.authToken = token
-    },
-    CLEAR_TOKEN (state) {
-      state.authToken = ''
-    },
     SAVE_USER (state, user) {
       state.user = user
     },
@@ -35,14 +28,13 @@ export default new Vuex.Store({
   },
   actions: {
     CONNECTION ({ commit }, data) {
+      console.log(data)
       commit('AUTH_CONNECT')
       commit('SAVE_USER', data.user)
-      commit('NEW_TOKEN', data.token)
     },
     DISCONNECT ({ commit }) {
       commit('AUTH_DISCONECT')
       commit('CLEAR_USER')
-      commit('CLEAR_TOKEN')
     }
   },
   modules: {

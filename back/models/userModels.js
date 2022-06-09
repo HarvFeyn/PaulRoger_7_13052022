@@ -12,20 +12,20 @@ exports.saveUser = (user) => {
         })
 };
 
-exports.findemail = async (email) => {
-    const findUserByEmail = await query("SELECT * FROM users WHERE email = ?", [email]);
-    return findUserByEmail[0]
+exports.findemail = (email) => {
+    return query("SELECT * FROM users WHERE email = ?", [email])
+        .then(result => {
+            return result[0]
+        })
 };
 
 
-exports.testpassword = async (email, password) => {
-    const findPWByEmail = await query("SELECT password FROM users WHERE email = ?", [email]);
-
-    const testpassword = await bcrypt.compare(password, findPWByEmail[0].password);
-
-    if(testpassword) {
-        return true
-    }
-
-    return false
+exports.testpassword = (email, password) => {
+    return query("SELECT password FROM users WHERE email = ?", [email])
+        .then(result =>{
+            return bcrypt.compare(password, result[0].password)
+                .then(res => {
+                    return res
+                })
+        })
 };

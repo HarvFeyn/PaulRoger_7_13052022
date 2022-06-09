@@ -20,7 +20,6 @@ exports.signup = (req, res, next) => {
 
 // request to login a user
 exports.login = (req, res, next) => {
-  console.log(req.body);
   dbmodel.findemail(req.body.email)
     .then(userfind => {
       if (userfind.id<=0) {

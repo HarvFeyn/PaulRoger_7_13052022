@@ -31,11 +31,9 @@ const auth = require('../API/auth')
         methods: {
             login (event) {
                 event.preventDefault()
-                console.log("Login")
                 auth.signin(event.target.elements.email.value, event.target.elements.password.value)    
                     .then(result => {
-                        console.log(result.data.token)
-                        this.$store.dispatch('CONNECTION', {user: event.target.elements.email.value, token: result.data.token})
+                        this.$store.dispatch('CONNECTION', {user: { token: result.data.token, name: result.data.userName, email: result.data.userEmail, id: result.data.userId }})
                     })
                     .catch(this.messageSubmit="email ou mot de passe incorrect")
             }
