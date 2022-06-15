@@ -1,0 +1,24 @@
+<template>
+    <div class="oneArticle">
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">{{ value.title }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Author : {{ value.author }}</h6>
+          <p class="card-text">{{ value.text }}</p>
+          <p class="card-text">Posté le : {{ value.date }}</p>
+        </div>
+      </div>
+    </div>
+</template>
+
+<script>
+export default {
+  name: 'oneArticle',
+  props: ['value']
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+
+</style>

@@ -8,7 +8,7 @@ exports.getOneArticle = (id) => {
 };
 
 exports.getTenArticle = () => {
-    return query("SELECT top 10 FROM article")
+    return query("SELECT * FROM article")
         .then(result => {
             return result
         })
