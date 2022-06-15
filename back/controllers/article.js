@@ -1,6 +1,7 @@
 const dbmodel = require('../models/articleModels');
 
 exports.getArticleById = (req, res, next) => {
+    console.log(req.params)
     dbmodel.getOneArticle(req.params.id)
         .then(result => {
             res.status(200).json({
@@ -10,8 +11,8 @@ exports.getArticleById = (req, res, next) => {
         .catch(error => res.status(400).json({ error }))
 }
 
-exports.getTenArticle = (req, res, next) => {
-    dbmodel.getTenArticle()
+exports.getAllArticle = (req, res, next) => {
+    dbmodel.getAllArticle()
         .then(result => {
             res.status(200).json({
                 result

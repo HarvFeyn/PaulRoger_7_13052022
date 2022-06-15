@@ -7,8 +7,8 @@ exports.getOneArticle = (id) => {
         })
 };
 
-exports.getTenArticle = () => {
-    return query("SELECT * FROM article")
+exports.getAllArticle = () => {
+    return query("SELECT * FROM article ORDER BY id DESC")
         .then(result => {
             return result
         })
@@ -31,7 +31,7 @@ exports.deleteArtcile = (id) => {
 };
 
 exports.modifyArticle = (id, article) => {
-    return query("UPDATE article SET (title, text) VALUES (?, ?) WHERE id = '" + id + "'", [article.title, article.text])
+    return query("UPDATE article SET title='" + article.title + "', text='" + article.text + "' WHERE id = '" + id + "'")
         .then(() => {
             console.log('article modify')
             return {message: "ok"}

@@ -1,7 +1,7 @@
 <template>
-    <div id="article">
+    <div id="ModifyArticle">
         <form v-if="!confirmation" id="form-article-setting" class="needs-validation" novalidate @submit="onSubmit">
-            <h2 class="mb-3">{{ localization.addArticle }}</h2>
+            <h2 class="mb-3">{{ localization.modArticle }}</h2>
             <div class="form-floating mb-3">
                 <input id="floating-title" v-model="title" type="text" class="form-control" :class="titleValid ? 'is-valid' : 'is-invalid' " @input="titleCheck">
                 <label for="floating-title">Titre :</label>
@@ -14,7 +14,7 @@
             </div>
         </form>
         <div v-if="confirmation" class="confirmation">
-            {{ localization.articleCreatedSuccess }}
+            {{ localization.articleModifySuccess }}
         </div>
     </div>
 </template>
@@ -27,9 +27,14 @@ const localization = require('../../../helpers/localization')
 const validator = require('validator')
 
 export default {
-    name: 'Article',
+    name: 'ModifyArticle',
     components: {
         VueEditor
+    },
+    props: {
+        articleId: {
+            type: Number
+        }
     },
     data() {
         return this.initialData()
@@ -96,15 +101,24 @@ export default {
                 name: this.$store.state.user.name,
             }
 
-            apiArticle.createArticle(data.title, data.content, data.name, this.$store.state.user.token)
+            apiArticle.modifyArticle(data.title, data.content, data.name, this.articleId, this.$store.state.user.token)
                 .then(result => {
                     console.log(result)
                     this.confirmation = true
-                }).catch(reason => {
+                })
+                .catch(reason => {
                     this.errorApiMessage = reason
                 })
         }
-    }
+    },
+    mounted() {
+        apiArticle.getOneArticle(this.articleId)
+            .then(article => {
+                this.title = article.data.result[0].title
+                this.content = article.data.result[0].text
+                this.titleCheck()
+            })
+    }  
 }
 </script>
 

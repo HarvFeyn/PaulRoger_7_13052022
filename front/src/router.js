@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './components/home/home.vue'
-import oneArticle from './components/article/page/oneArticle.vue'
+import article from './components/article/page/oneArticle.vue'
 
 Vue.use(Router)
 
@@ -23,8 +23,8 @@ const router = new Router({
       redirect: '/'
     }, {
       path: '/article/:id',
-      name: 'oneArticle',
-      component: oneArticle,
+      name: 'article',
+      component: article,
       props: true
     }
   ]

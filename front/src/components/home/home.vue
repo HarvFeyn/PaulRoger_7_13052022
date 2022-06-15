@@ -1,8 +1,8 @@
 <template>
   <div id="home">
     <div id="articles" class="container">
-      <div v-for="(article, key) in articles" :key="key" class="zoom">
-        <post-article
+      <div v-for="(article, key) in articles" @click="goToArticleRouteId(article.id)" :key="key" class="zoom">
+        <index-article
           :id="article.id"
           :value="article"
           :count="article.count"
@@ -14,7 +14,7 @@
 
 <script>
 import Modal from '../modal.vue'
-import PostArticle from '../article/page/oneArticle.vue'
+import IndexArticle from '../article/page/indexArticle.vue'
 import { mapState } from 'vuex'
 import api from '../API/article'
 
@@ -22,7 +22,7 @@ import api from '../API/article'
     name: 'Home',
     components: {
       Modal,
-      PostArticle
+      IndexArticle
     },
     data () {
       return {
@@ -33,6 +33,10 @@ import api from '../API/article'
       ...mapState(['authenticated'])
     },
     methods: {
+      goToArticleRouteId (id) {
+        console.log(id)
+        this.$router.replace({ name: 'article', params: { id } })
+      }
     },
     beforeRouteEnter (to, from, next) {
       api.getAllArticle()
