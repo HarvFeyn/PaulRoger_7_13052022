@@ -11,17 +11,16 @@ module.exports = {
   *
   * @param {object} data - details of user : {email, password, firstname, lastname, isModerator}
   */
-  createArticle (title, text, author) {
-    return apiHandler.post(createUrl, { title, text, author }, { defaultToken: true })
+  createArticle (title, text, author, token) {
+    return apiHandler.post(createUrl, { title, text, author }, { headers: { Authorization: `Basic ${token}` }, defaultToken: true })
       .then(result => {
         return result
       })
   },
 
   /**
-  * Create a new article
+  * Get articles
   *
-  * @param {object} data - details of user : {email, password, firstname, lastname, isModerator}
   */
   getTenArticle () {
     return apiHandler.get(indexUrl, { defaultToken: true })

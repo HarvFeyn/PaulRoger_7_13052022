@@ -31,7 +31,7 @@ const article = require('../../API/article')
         methods: {
             create (event) {
                 event.preventDefault()
-                article.createArticle(event.target.elements.title.value, event.target.elements.body.value, this.$store.state.user.name)    
+                article.createArticle(event.target.elements.title.value, event.target.elements.body.value, this.$store.state.user.name, this.$store.state.user.token)    
                     .then(() => {
                         console.log("article created")
                     })

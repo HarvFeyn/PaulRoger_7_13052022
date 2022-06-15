@@ -28,7 +28,6 @@ export default new Vuex.Store({
   },
   actions: {
     CONNECTION ({ commit }, data) {
-      console.log(data)
       commit('AUTH_CONNECT')
       commit('SAVE_USER', data.user)
     },
