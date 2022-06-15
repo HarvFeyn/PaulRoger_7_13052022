@@ -22,7 +22,7 @@ module.exports = {
   * Get articles
   *
   */
-  getTenArticle () {
+  getAllArticle () {
     return apiHandler.get(indexUrl, { defaultToken: true })
       .then(result => {
         return result

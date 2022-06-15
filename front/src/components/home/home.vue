@@ -35,7 +35,7 @@ import api from '../API/article'
     methods: {
     },
     beforeRouteEnter (to, from, next) {
-      api.getTenArticle()
+      api.getAllArticle()
         .then(dataApi => {
             const articles = dataApi.data.result
             next(page => {

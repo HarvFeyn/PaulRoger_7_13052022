@@ -1,7 +1,7 @@
 const apiHandler = require('./APIHandler')
 // eslint-disable-next-line no-undef
-const url = `${API_URL}/article`
-const saveImage = `${url}/saveImage`
+const url = `${API_URL}/image`
+const saveImage = `${url}/`
 
 module.exports = {
 
@@ -10,8 +10,8 @@ module.exports = {
     *
     * @param {image, token} data - image to save
     */
-  saveImage (image, token) {
-    return apiHandler.post(saveImage, { image }, { headers: { Authorization: `Basic ${token}` }, defaultToken: true })
+  saveImage (body, token) {
+    return apiHandler.post(saveImage, body, { headers: { Authorization: `Basic ${token}` }, defaultToken: true })
       .then(result => {
         return result
       })
