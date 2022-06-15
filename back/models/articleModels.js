@@ -15,7 +15,7 @@ exports.getTenArticle = () => {
 };
 
 exports.creatArticle = (article) => {
-    return query("INSERT INTO article (title, text, author, likes, date) VALUES (?, ?, ?, ?, ?)", [article.title, article.text, article.author, "", new Date()])
+    return query("INSERT INTO article (title, text, author) VALUES (?, ?, ?)", [article.title, article.text, article.author])
         .then(() => {
             console.log('article created')
             return {message: "ok"}
