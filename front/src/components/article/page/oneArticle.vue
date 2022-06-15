@@ -4,7 +4,7 @@
         <div class="card-body">
           <h5 class="card-title">{{ value.title }}</h5>
           <h6 class="card-subtitle mb-2 text-muted">Author : {{ value.author }}</h6>
-          <p class="card-text">{{ value.text }}</p>
+          <div v-html="value.text"></div>
           <p class="card-text">Posté le : {{ value.date }}</p>
         </div>
       </div>

@@ -71,6 +71,7 @@ const validator = require('validator')
                 console.log('handleImageAdded')
                 const formData = new FormData()
                 formData.append('image', file)
+                console.log(file)
                 apiImage.saveImage(formData, this.$store.state.user.token)
                     .then(result => {
                         console.log(result)
@@ -102,14 +103,6 @@ const validator = require('validator')
                     }).catch(reason => {
                         this.errorApiMessage = reason
                     })
-            },
-            create (event) {
-                event.preventDefault()
-                apiArticle.createArticle(event.target.elements.title.value, event.target.elements.body.value, this.$store.state.user.name, this.$store.state.user.token)    
-                    .then(() => {
-                        console.log("article created")
-                    })
-                    .catch(this.messageSubmit="email ou mot de passe incorrect")
             }
         }
     }
