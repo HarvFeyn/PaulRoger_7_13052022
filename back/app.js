@@ -1,8 +1,14 @@
 const express = require('express');
 const userRoutes = require('./routes/user');
 const articleRoutes = require('./routes/article');
-
+const fs = require('fs');
+const path = require('path');
 const app = express();
+
+// Create images folder if it does not exist
+if (!fs.existsSync('./images')) {
+  fs.mkdirSync('./images', { recursive: true })
+}
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
@@ -15,5 +21,6 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use('/api/auth', userRoutes);
 app.use('/api/article', articleRoutes);
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 module.exports = app;
