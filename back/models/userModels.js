@@ -19,6 +19,13 @@ exports.findemail = (email) => {
         })
 };
 
+exports.findId = (id) => {
+    return query("SELECT * FROM users WHERE id = ?", [id])
+        .then(result => {
+            return result[0]
+        })
+};
+
 
 exports.testpassword = (email, password) => {
     return query("SELECT password FROM users WHERE email = ?", [email])

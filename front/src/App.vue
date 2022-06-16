@@ -21,7 +21,7 @@
           <router-view />
         </transition>
         <!-- Modal -->
-        <Modal :component="component" :isForm="isForm" />
+        <Modal :component="component" :isForm="isForm" :articleId="articleId" />
       </main>
     </div>
 </template>
@@ -31,6 +31,9 @@ import Register from './components/register/register.vue'
 import Login from './components/login/login.vue'
 import Modal from './components/modal.vue'
 import Article from './components/article/modal/article.vue'
+import ModifyArticle from './components/article/modal/modify.vue'
+import DeleteArticle from './components/article/modal/delete.vue'
+
 import { mapState } from 'vuex'
 
 export default {
@@ -41,7 +44,8 @@ export default {
   data () {
     return {
       component: undefined,
-      isForm: true
+      isForm: true,
+      articleId: undefined
     }
   },
   computed: {
@@ -63,6 +67,16 @@ export default {
     article () {
       this.component = Article
       this.isForm = true
+    },
+    modifyArticle (id) {
+      this.component = ModifyArticle
+      this.isForm = true
+      this.articleId = id
+    },
+    deleteArticle (id) {
+      this.component = DeleteArticle
+      this.isForm = true
+      this.articleId = id
     }
   }
 }
