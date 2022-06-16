@@ -26,16 +26,25 @@ export default {
   name: 'Modal',
   components: {},
   props: {
-    component: {
-      type: Object
+    options: {
+      type: Object,
+      required: false
     },
     isForm: {
-      type: Boolean
+      type: Boolean,
+      default: false
+    },
+    component: {
+      type: Object,
+      required: false
+    },
+    value: {
+      type: Object,
+      default: undefined
     },
     articleId: {
       type: Number
     }
-
   },
   watch: {
     options: function (newVal, oldVal) { // watch it
