@@ -49,14 +49,17 @@ exports.modifyArticle = (req, res, next) => {
         title: req.body.title,
         text: req.body.text
     }
-    console.log("lul")
     dbmodel.authToModify(req.params.id, req.body.userId)
         .then(auth => {
-            console.log("lal")
             if(auth) {
                 dbmodel.modifyArticle(req.params.id, article)
                     .then(() => res.status(201).json({ message: 'Article modifié !' }))
                     .catch(error => res.status(400).json({ error }));
             }
         })
+}
+
+exports.likeArticle = (req, res, next) => {
+    dbmodel.likeArticle(req.body.userId, req.params.id, req.body.like)
+        .then()
 }

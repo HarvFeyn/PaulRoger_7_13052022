@@ -1,4 +1,5 @@
 const query = require("../helpers/dbpool").query
+const { stringify } = require("querystring");
 const userdbmodel = require('./userModels');
 
 exports.getOneArticle = (id) => {
@@ -16,7 +17,7 @@ exports.getAllArticle = () => {
 };
 
 exports.creatArticle = (article) => {
-    return query("INSERT INTO article (title, text, author, authorId) VALUES (?, ?, ?, ?)", [article.title, article.text, article.author, article.authorId])
+    return query("INSERT INTO article (title, text, author, authorId, likes) VALUES (?, ?, ?, ?, ?)", [article.title, article.text, article.author, article.authorId, JSON.stringify({})])
         .then(() => {
             console.log('article created')
             return {message: "ok"}
@@ -53,6 +54,28 @@ exports.authToModify = (id, authorId) => {
                     }
                     
                     return false
+                })
+        })
+};
+
+exports.likeArticle = (userId, articleId, like) => {
+    console.log("first")
+    return query("SELECT * FROM article WHERE id = '" + articleId + "'")
+        .then(result => {
+
+            var newlike = {}
+            newlike[userId]=like
+            var likes = result[0].likes
+            let finallikes = {}
+
+            finallikes = { 
+                ...likes,
+                ...newlike
+            }
+
+            return query("UPDATE article SET likes= '" + JSON.stringify(finallikes) + "' WHERE id = '" + articleId + "'")
+                .then(() => {
+                    return {message: "ok"}
                 })
         })
 };
