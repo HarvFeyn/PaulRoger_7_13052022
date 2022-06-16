@@ -8,10 +8,10 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarLogReg">
             <div class="navbar-nav ms-auto">
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal" @click="login()" v-if="!authenticated">Login</button>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal" @click="register()" v-if="!authenticated">Register</button>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal" @click="article()" v-if="authenticated">Create new article</button>
-              <button type="button" class="btn btn-primary" @click="logout()" v-if="authenticated">Logout</button>
+              <button type="button" class="btn btn-nav" data-bs-toggle="modal" data-bs-target="#modal" @click="login()" v-if="!authenticated">Login</button>
+              <button type="button" class="btn btn-nav" data-bs-toggle="modal" data-bs-target="#modal" @click="register()" v-if="!authenticated">Register</button>
+              <button type="button" class="btn btn-nav" data-bs-toggle="modal" data-bs-target="#modal" @click="article()" v-if="authenticated">Create new article</button>
+              <button type="button" class="btn btn-nav" @click="logout()" v-if="authenticated">Logout</button>
             </div>
           </div>
         </div>
@@ -26,6 +26,7 @@
     </div>
 </template>
 
+<script src="https://kit.fontawesome.com/ff2781ec58.js" crossorigin="anonymous"></script>
 <script>
 import Register from './components/register/register.vue'
 import Login from './components/login/login.vue'
@@ -82,15 +83,31 @@ export default {
 }
 </script>
 
+
 <style lang="scss">
+
   @import "./scss/custom.scss";
+  @import "./scss/utils";
+  @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 
   #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
+    font-family: 'Lato', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #3e33d8;
-    margin-top: 0px;
+    color: $tertiarycolor;
+    margin: 0px;
+    padding: 0px;
+    background-color: $tertiarycolor;
+    height: 100%;
   }
+
+  .btn-nav {
+    margin: 10px;
+  }
+
+  main {
+    margin: 25px;
+  }
+
 </style>

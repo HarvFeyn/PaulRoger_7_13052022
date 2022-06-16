@@ -73,4 +73,8 @@ const eventBus = require('../../helpers/event-bus')
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
+.btn {
+    margin-top: 10px;
+}
+
 </style>
