@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     canModify () {
-      if( this.article.author == this.$store.state.user.name ) {
+      if( ( this.article.author == this.$store.state.user.name ) || this.$store.state.user.isAdmin == 1 ) {
         return true
       }
       return false

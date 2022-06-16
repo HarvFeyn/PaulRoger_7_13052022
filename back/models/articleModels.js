@@ -1,4 +1,5 @@
 const query = require("../helpers/dbpool").query
+const userdbmodel = require('./userModels');
 
 exports.getOneArticle = (id) => {
     return query("SELECT * FROM article WHERE id = '" + id + "'")
@@ -15,7 +16,7 @@ exports.getAllArticle = () => {
 };
 
 exports.creatArticle = (article) => {
-    return query("INSERT INTO article (title, text, author) VALUES (?, ?, ?)", [article.title, article.text, article.author])
+    return query("INSERT INTO article (title, text, author, authorId) VALUES (?, ?, ?, ?)", [article.title, article.text, article.author, article.authorId])
         .then(() => {
             console.log('article created')
             return {message: "ok"}
@@ -35,5 +36,23 @@ exports.modifyArticle = (id, article) => {
         .then(() => {
             console.log('article modify')
             return {message: "ok"}
+        })
+};
+
+exports.authToModify = (id, authorId) => {
+    return query("SELECT * FROM article WHERE id = '" + id + "'")
+        .then(result => {
+            if(result[0].authorId == authorId) {
+                return true
+            }
+
+            return userdbmodel.findId(authorId)
+                .then(user => {
+                    if (user.isAdmin == 1) {
+                        return true
+                    }
+                    
+                    return false
+                })
         })
 };

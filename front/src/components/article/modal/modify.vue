@@ -25,6 +25,7 @@ const apiArticle = require('../../API/article')
 const apiImage = require('../../API/images')
 const localization = require('../../../helpers/localization')
 const validator = require('validator')
+const eventBus = require('../../../helpers/event-bus')
 
 export default {
     name: 'ModifyArticle',
@@ -101,7 +102,7 @@ export default {
                 name: this.$store.state.user.name,
             }
 
-            apiArticle.modifyArticle(data.title, data.content, data.name, this.articleId, this.$store.state.user.token)
+            apiArticle.modifyArticle(this.$store.state.user.id, data.title, data.content, data.name, this.articleId, this.$store.state.user.token)
                 .then(result => {
                     console.log(result)
                     this.confirmation = true
@@ -118,7 +119,24 @@ export default {
                 this.content = article.data.result[0].text
                 this.titleCheck()
             })
-    }  
+    },
+    created() {
+        console.log("ModifyArticle created")
+        eventBus.$on('show-modal-ModifyArticle', value => {
+            console.log('ModifyArticle - eventBus.$on(show-modal)')
+            this.reset()
+            apiArticle.getOneArticle(this.articleId)
+                .then(article => {
+                    this.title = article.data.result[0].title
+                    this.content = article.data.result[0].text
+                    this.titleCheck()
+                })
+        })
+    },
+    beforeDestroy () {
+        console.log('beforeDestroy ModifyArticle')
+        eventBus.$off('show-modal-ModifyArticle')
+    } 
 }
 </script>
 

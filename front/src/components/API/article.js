@@ -15,8 +15,8 @@ module.exports = {
   * @param {String} author - id of the article to modify
   * @param {String} token - token of the user
   */
-  createArticle (title, text, author, token) {
-    return apiHandler.post(createUrl, { title, text, author }, { headers: { Authorization: `Basic ${token}` }, defaultToken: true })
+  createArticle (title, text, author, authorId, token) {
+    return apiHandler.post(createUrl, { title, text, author, authorId }, { headers: { Authorization: `Basic ${token}` }, defaultToken: true })
       .then(result => {
         return result
       })
@@ -48,11 +48,12 @@ module.exports = {
   /**
   * Delete one articles by id
   *
+  * @param {int} userId - id user
   * @param {int} id - id of the article to delete
   * @param {String} token - token of the user
   */
-  deleteArticle (id, token) {
-    return apiHandler.delete(oneArticleUrl + id, {}, { headers: { Authorization: `Basic ${token}` } }, { defaultToken: true })
+  deleteArticle (userId, id, token) {
+    return apiHandler.delete(oneArticleUrl + id, { userId }, { headers: { Authorization: `Basic ${token}` } }, { defaultToken: true })
       .then(result => {
         return result
       })
@@ -61,14 +62,15 @@ module.exports = {
   /**
   * Modify one articles by id
   *
+  * @param {int} userId - id user
   * @param {String} title - id of the article to modify
   * @param {String} text - id of the article to modify
   * @param {String} author - id of the article to modify
   * @param {int} id - id of the article to modify
   * @param {String} token - token of the user
   */
-  modifyArticle (title, text, author, id, token) {
-    return apiHandler.patch(oneArticleUrl + id, { title, text, author }, { headers: { Authorization: `Basic ${token}` } }, { defaultToken: true })
+  modifyArticle (userId, title, text, author, id, token) {
+    return apiHandler.patch(oneArticleUrl + id, { userId, title, text, author }, { headers: { Authorization: `Basic ${token}` } }, { defaultToken: true })
       .then(result => {
         return result
       })

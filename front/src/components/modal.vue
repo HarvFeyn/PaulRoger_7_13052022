@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import { Modal } from 'bootstrap'
+const eventBus = require('../helpers/event-bus')
 
 export default {
   name: 'Modal',
@@ -35,10 +37,39 @@ export default {
     }
 
   },
+  watch: {
+    options: function (newVal, oldVal) { // watch it
+      // Apply new configuration option to current modal instance
+      this.modal._config = this.options
+    }
+  },
   data () {
-    return {}
+    return {
+      modal: undefined
+    }
+  },
+  mounted () {
+    console.log("modal mounted")
+    const modalEl = document.getElementById('modal')
+    // Create new Modal Instance and apply configuration options
+    this.modal = new Modal(modalEl, this.options)
+    modalEl.addEventListener('show.bs.modal', event => {
+      if (this.component) {
+        console.log(this.component.name)
+        // waiting 100 ms in order to let time for components to be created before received event bus
+        setTimeout(() => {
+          eventBus.$emit(`show-modal-${this.component.name}`, undefined)
+        }, 100)
+      }
+    })
   },
   methods: {
+    close () {
+      if (typeof this.modal !== 'undefined') {
+        this.modal.hide()
+        console.log('close modal')
+      }
+    }
   }
 }
 </script>

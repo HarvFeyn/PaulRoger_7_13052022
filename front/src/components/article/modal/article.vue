@@ -25,6 +25,7 @@ const apiArticle = require('../../API/article')
 const apiImage = require('../../API/images')
 const localization = require('../../../helpers/localization')
 const validator = require('validator')
+const eventBus = require('../../../helpers/event-bus')
 
 export default {
     name: 'Article',
@@ -94,16 +95,28 @@ export default {
                 title: this.title,
                 content: this.content,
                 name: this.$store.state.user.name,
+                authorId: this.$store.state.user.id
             }
 
-            apiArticle.createArticle(data.title, data.content, data.name, this.$store.state.user.token)
+            apiArticle.createArticle(data.title, data.content, data.name, data.authorId, this.$store.state.user.token)
                 .then(result => {
-                    console.log(result)
                     this.confirmation = true
                 }).catch(reason => {
                     this.errorApiMessage = reason
                 })
         }
+    },
+    created() {
+        this.reset()
+        console.log("article created")
+        eventBus.$on('show-modal-Article', value => {
+            console.log('article - eventBus.$on(show-modal)')
+            this.reset()
+        })
+    },
+    beforeDestroy () {
+        console.log('beforeDestroy article')
+        eventBus.$off('show-modal-Article')
     }
 }
 </script>

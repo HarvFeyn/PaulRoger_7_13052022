@@ -26,6 +26,7 @@ exports.creatArticle = (req, res, next) => {
         title: req.body.title,
         text: req.body.text,
         author: req.body.author,
+        authorId: req.body.authorId
     }
     dbmodel.creatArticle(article)
         .then(() => res.status(201).json({ message: 'Article créé !' }))
@@ -33,10 +34,14 @@ exports.creatArticle = (req, res, next) => {
 }
 
 exports.deleteArtcile = (req, res, next) => {
-    console.log("deleting")
-    dbmodel.deleteArtcile(req.params.id)
-        .then(() => res.status(201).json({ message: 'Article supprimé !' }))
-        .catch(error => res.status(400).json({ error }));
+    dbmodel.authToModify(req.params.id, req.body.userId)
+        .then(auth => {
+            if(auth) {
+                dbmodel.deleteArtcile(req.params.id)
+                    .then(() => res.status(201).json({ message: 'Article supprimé !' }))
+                    .catch(error => res.status(400).json({ error }));
+            }
+        })
 }
 
 exports.modifyArticle = (req, res, next) => {
@@ -44,7 +49,14 @@ exports.modifyArticle = (req, res, next) => {
         title: req.body.title,
         text: req.body.text
     }
-    dbmodel.modifyArticle(req.params.id, article)
-        .then(() => res.status(201).json({ message: 'Article modifié !' }))
-        .catch(error => res.status(400).json({ error }));
+    console.log("lul")
+    dbmodel.authToModify(req.params.id, req.body.userId)
+        .then(auth => {
+            console.log("lal")
+            if(auth) {
+                dbmodel.modifyArticle(req.params.id, article)
+                    .then(() => res.status(201).json({ message: 'Article modifié !' }))
+                    .catch(error => res.status(400).json({ error }));
+            }
+        })
 }
