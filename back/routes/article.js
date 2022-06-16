@@ -8,5 +8,6 @@ router.get('/:id', articleCtrl.getArticleById);
 router.post('/newArticle', auth, articleCtrl.creatArticle);
 router.delete('/:id', auth, articleCtrl.deleteArtcile);
 router.patch('/:id', auth, articleCtrl.modifyArticle);
+router.patch('/:id/like', auth, articleCtrl.likeArticle);
 
 module.exports = router;

@@ -6,6 +6,8 @@
           <h6 class="card-subtitle mb-2 text-muted">Author : {{article.author}}</h6>
           <div v-html="article.text"></div>
           <p class="card-text">Posté le : {{article.date}}</p>
+          <p @click="likeArticle()"> likes : {{numberlikes}} </p>
+          <p @click="dislikeArticle()"> dislikes : {{numberdislikes}} </p>
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal" v-if="canModify()" @click="modifArticle()">Modify</button>
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal" v-if="canModify()" @click="deleteArticle()">Delete</button>
         </div>
@@ -25,6 +27,28 @@ export default {
       isForm: true
     }
   },
+  computed: {
+    numberlikes () {
+      let nbrlike = 0
+      const likes = this.article.likes
+      for (const like in likes) {
+        if ( likes[like] == 1 ) {
+          nbrlike++
+        }
+      }
+      return nbrlike
+    },
+    numberdislikes () {
+      let nbrdislike = 0
+      const likes = this.article.likes
+      for ( let like in likes) {
+        if ( likes[like] == -1 ) {
+          nbrdislike++
+        }
+      }
+      return nbrdislike
+    }
+  },
   methods: {
     canModify () {
       if( ( this.article.author == this.$store.state.user.name ) || this.$store.state.user.isAdmin == 1 ) {
@@ -37,6 +61,12 @@ export default {
     },
     deleteArticle () {
       this.$parent.deleteArticle(this.article.id)
+    },
+    likeArticle () {
+      api.likeArticle(this.$store.state.user.id, this.article.id, 1, this.$store.state.user.token)
+    },
+    dislikeArticle () {
+      api.likeArticle(this.$store.state.user.id, this.article.id, -1, this.$store.state.user.token)
     }
   },
   beforeCreate () {

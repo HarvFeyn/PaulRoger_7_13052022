@@ -74,5 +74,21 @@ module.exports = {
       .then(result => {
         return result
       })
+  },
+
+  /**
+  * Modify one articles by id
+  *
+  * @param {int} userId - id user
+  * @param {int} id - id of the article to modify
+  * @param {int} like - like of the article to modify
+  * @param {String} token - token of the user
+  */
+  likeArticle (userId, id, like, token) {
+    return apiHandler.patch(oneArticleUrl + id + '/like', { userId, like }, { headers: { Authorization: `Basic ${token}` } }, { defaultToken: true })
+      .then(result => {
+        return result
+      })
   }
+
 }
