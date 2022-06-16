@@ -142,5 +142,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+#btn-register-submit {
+    margin-top: 50px;
+}
 </style>

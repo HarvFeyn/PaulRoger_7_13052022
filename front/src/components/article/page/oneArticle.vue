@@ -1,15 +1,25 @@
 <template>
     <div class="oneArticle">
-      <div class="card" style="width: 18rem;">
+      <div class="card">
         <div class="card-body">
           <h5 class="card-title">{{article.title}}</h5>
           <h6 class="card-subtitle mb-2 text-muted">Author : {{article.author}}</h6>
-          <div v-html="article.text"></div>
-          <p class="card-text">Posté le : {{article.date}}</p>
-          <p @click="likeArticle()"> likes : {{numberlikes}} </p>
-          <p @click="dislikeArticle()"> dislikes : {{numberdislikes}} </p>
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal" v-if="canModify()" @click="modifArticle()">Modify</button>
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal" v-if="canModify()" @click="deleteArticle()">Delete</button>
+          <div class="card-content" v-html="article.text"></div>
+          <div class="card-footer">
+            <p class="card-text">Posté le : {{article.date.split('T')[0]}}</p>
+            <div class="card-likes">
+              <div class="card-like">
+                <p class="card-icon-like" @click="likeArticle()">likes : </p>
+                <p> {{numberlikes}} </p>
+              </div>
+              <div class="card-like">
+                <p class="card-icon-like" @click="dislikeArticle()">dislikes : </p>
+                <p> {{numberdislikes}} </p>
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal" v-if="canModify()" @click="modifArticle()">Modify</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal" v-if="canModify()" @click="deleteArticle()">Delete</button>
+          </div>
         </div>
       </div>
     </div>
@@ -81,5 +91,33 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.card-body{
+  margin: 15px;
+  overflow: hidden;
+}
+
+img {
+  object-fit: cover;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-around;
+}
+
+.card-likes {
+  display: flex;
+  justify-content: space-around;
+}
+
+.card-like {
+  margin: 5px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.card-icon-like:hover {
+  cursor: pointer;
+}
 
 </style>
