@@ -1,7 +1,7 @@
 <template>
-    <div id="article">
+    <div id="ModifyArticle">
         <form v-if="!confirmation" id="form-article-setting" class="needs-validation" novalidate @submit="onSubmit">
-            <h2 class="mb-3">{{ localization.addArticle }}</h2>
+            <h2 class="mb-3">{{ localization.modArticle }}</h2>
             <div class="form-floating mb-3">
                 <input id="floating-title" v-model="title" type="text" class="form-control" :class="titleValid ? 'is-valid' : 'is-invalid' " @input="titleCheck">
                 <label for="floating-title">Titre :</label>
@@ -14,7 +14,7 @@
             </div>
         </form>
         <div v-if="confirmation" class="confirmation">
-            {{ localization.articleCreatedSuccess }}
+            {{ localization.articleModifySuccess }}
         </div>
     </div>
 </template>
@@ -28,9 +28,14 @@ const validator = require('validator')
 const eventBus = require('../../../helpers/event-bus')
 
 export default {
-    name: 'Article',
+    name: 'ModifyArticle',
     components: {
         VueEditor
+    },
+    props: {
+        articleId: {
+            type: Number
+        }
     },
     data() {
         return this.initialData()
@@ -95,37 +100,49 @@ export default {
                 title: this.title,
                 content: this.content,
                 name: this.$store.state.user.name,
-                authorId: this.$store.state.user.id
             }
 
-            apiArticle.createArticle(data.title, data.content, data.name, data.authorId, this.$store.state.user.token)
+            apiArticle.modifyArticle(this.$store.state.user.id, data.title, data.content, data.name, this.articleId, this.$store.state.user.token)
                 .then(result => {
+                    console.log(result)
                     this.confirmation = true
-                }).catch(reason => {
+                })
+                .catch(reason => {
                     this.errorApiMessage = reason
                 })
         }
     },
+    mounted() {
+        apiArticle.getOneArticle(this.articleId)
+            .then(article => {
+                this.title = article.data.result[0].title
+                this.content = article.data.result[0].text
+                this.titleCheck()
+            })
+    },
     created() {
-        this.reset()
-        console.log("article created")
-        eventBus.$on('show-modal-Article', value => {
-            console.log('article - eventBus.$on(show-modal)')
+        console.log("ModifyArticle created")
+        eventBus.$on('show-modal-ModifyArticle', value => {
+            console.log('ModifyArticle - eventBus.$on(show-modal)')
             this.reset()
+            apiArticle.getOneArticle(this.articleId)
+                .then(article => {
+                    this.title = article.data.result[0].title
+                    this.content = article.data.result[0].text
+                    this.titleCheck()
+                })
         })
     },
     beforeDestroy () {
-        console.log('beforeDestroy article')
-        eventBus.$off('show-modal-Article')
-    }
+        console.log('beforeDestroy ModifyArticle')
+        eventBus.$off('show-modal-ModifyArticle')
+    } 
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 #btn-register-submit {
     margin-top: 50px;
 }
-
 </style>

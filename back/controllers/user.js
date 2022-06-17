@@ -35,6 +35,7 @@ exports.login = (req, res, next) => {
             userId: userfind.id,
             userName: userfind.name,
             userEmail: userfind.email,
+            isAdmin: userfind.isAdmin,
             token: jwt.sign(
               { userId: userfind },
               'RANDOM_TOKEN_SECRET',
