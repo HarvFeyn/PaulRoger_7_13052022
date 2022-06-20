@@ -2,7 +2,9 @@
     <div id="app">
       <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
-          <router-link class="navbar-brand" to="/">Groupomania</router-link>
+          <router-link class="navbar-brand" to="/" @click="reload()">
+            <img id="logogroupomania" alt="logo de groupomania" src="./assets/img/Groupomania Logos (update 2022)/icon-left-font-monochrome-black.png">
+          </router-link>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -78,6 +80,9 @@ export default {
       this.component = DeleteArticle
       this.isForm = true
       this.articleId = id
+    },
+    reload () {
+      
     }
   }
 }
@@ -110,4 +115,7 @@ export default {
     margin: 25px;
   }
 
+  #logogroupomania {
+    max-width: 150px;
+  }
 </style>
