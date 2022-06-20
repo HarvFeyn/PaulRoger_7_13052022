@@ -1,7 +1,7 @@
 <template>
     <div id="article">
         <form v-if="!confirmation" id="form-article-setting" class="needs-validation" novalidate @submit="onSubmit">
-            <h2 class="mb-3">{{ localization.addArticle }}</h2>
+            <h3 class="mb-3">{{ localization.addArticle }}</h3>
             <div class="form-floating mb-3">
                 <input id="floating-title" v-model="title" type="text" class="form-control" :class="titleValid ? 'is-valid' : 'is-invalid' " @input="titleCheck">
                 <label for="floating-title">Titre :</label>

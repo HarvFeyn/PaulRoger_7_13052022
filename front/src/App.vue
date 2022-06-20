@@ -5,16 +5,12 @@
           <router-link class="navbar-brand" to="/" @click="reload()">
             <img id="logogroupomania" alt="logo de groupomania" src="./assets/img/Groupomania Logos (update 2022)/icon-left-font-monochrome-black.png">
           </router-link>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarLogReg">
-            <div class="navbar-nav ms-auto">
-              <button type="button" class="btn btn-nav" data-bs-toggle="modal" data-bs-target="#modal" @click="login()" v-if="!authenticated">Login</button>
-              <button type="button" class="btn btn-nav" data-bs-toggle="modal" data-bs-target="#modal" @click="register()" v-if="!authenticated">Register</button>
-              <button type="button" class="btn btn-nav" data-bs-toggle="modal" data-bs-target="#modal" @click="article()" v-if="authenticated">Create new article</button>
-              <button type="button" class="btn btn-nav" @click="logout()" v-if="authenticated">Logout</button>
-            </div>
+          <div class="navbar-nav">
+            <p id="username" v-if="authenticated">{{$store.state.user.name}}</p>
+            <button type="button" class="btn btn-nav" data-bs-toggle="modal" data-bs-target="#modal" @click="login()" v-if="!authenticated">{{localization.login}}</button>
+            <button type="button" class="btn btn-nav" data-bs-toggle="modal" data-bs-target="#modal" @click="register()" v-if="!authenticated">{{localization.register}}</button>
+            <button type="button" class="btn btn-nav" data-bs-toggle="modal" data-bs-target="#modal" @click="article()" v-if="authenticated">{{localization.newarticle}}</button>
+            <button type="button" class="btn btn-nav" @click="logout()" v-if="authenticated">Déconnection</button>
           </div>
         </div>
       </nav>
@@ -36,8 +32,9 @@ import Modal from './components/modal.vue'
 import Article from './components/article/modal/article.vue'
 import ModifyArticle from './components/article/modal/modify.vue'
 import DeleteArticle from './components/article/modal/delete.vue'
-
+import 'bootstrap-icons/font/bootstrap-icons.css'
 import { mapState } from 'vuex'
+const localization = require('./helpers/localization')
 
 export default {
   name: 'App',
@@ -48,7 +45,8 @@ export default {
     return {
       component: undefined,
       isForm: true,
-      articleId: undefined
+      articleId: undefined,
+      localization
     }
   },
   computed: {
@@ -103,8 +101,24 @@ export default {
     color: $tertiarycolor;
     margin: 0px;
     padding: 0px;
-    background-color: $tertiarycolor;
-    height: 100%;
+  }
+
+  .navbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .container-fluid {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .navbar-nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
   }
 
   .btn-nav {
@@ -117,5 +131,31 @@ export default {
 
   #logogroupomania {
     max-width: 150px;
+  }
+
+  form > h3 {
+    text-decoration: underline $primarycolor;
+  }
+
+  h5 {
+    text-decoration: underline $primarycolor;
+  }
+
+  #username {
+    margin-top: 17px;
+    color: $primarycolor;
+    text-decoration: bold;
+  }
+
+  @media (max-width : 700px) {
+    .container-fluid {
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .navbar-nav {
+      flex-direction: column;
+      justify-content: center;
+    }
   }
 </style>
