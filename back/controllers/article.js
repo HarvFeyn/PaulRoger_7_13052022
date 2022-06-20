@@ -61,5 +61,6 @@ exports.modifyArticle = (req, res, next) => {
 
 exports.likeArticle = (req, res, next) => {
     dbmodel.likeArticle(req.body.userId, req.params.id, req.body.like)
-        .then()
+        .then(() => res.status(201).json({ message: 'Like modifié' }))
+        .catch(error => res.status(400).json({ error }));
 }

@@ -32,7 +32,9 @@ export default {
   name: 'oneArticle',
   data () {
     return {
-      article : {},
+      article : {
+        date: ""
+      },
       component: undefined,
       isForm: true
     }
@@ -66,6 +68,13 @@ export default {
       }
       return false
     },
+    callApi () {
+      api.getOneArticle(this.$route.params.id)
+        .then(article => {
+            this.article = article.data.result[0]
+          }
+      )
+    },
     modifArticle () {
       this.$parent.modifyArticle(this.article.id)
     },
@@ -74,15 +83,23 @@ export default {
     },
     likeArticle () {
       api.likeArticle(this.$store.state.user.id, this.article.id, 1, this.$store.state.user.token)
+        .then(() => {
+            this.callApi()
+          }
+        )
     },
     dislikeArticle () {
       api.likeArticle(this.$store.state.user.id, this.article.id, -1, this.$store.state.user.token)
+        .then(() => {
+            this.callApi()
+          }
+        )
     }
   },
   beforeCreate () {
-    api.getOneArticle(this.$route.params.id)
-      .then(article => {
-          this.article = article.data.result[0]
+      api.getOneArticle(this.$route.params.id)
+        .then(article => {
+            this.article = article.data.result[0]
         }
       )
   }
