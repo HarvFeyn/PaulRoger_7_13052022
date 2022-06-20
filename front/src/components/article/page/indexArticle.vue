@@ -5,7 +5,9 @@
           <h5 class="card-title">{{ value.title }}</h5>
           <h6 class="card-subtitle mb-2 text-muted">Auteur : {{ value.author }}</h6>
           <div class="card-content" v-html="value.text"></div>
-          <p class="card-text">Posté le : {{ value.date.split('T')[0] }}</p>
+          <div class="card-footer">
+            <p class="card-text">Posté le : {{value.date.split('T')[0]}}</p>
+          </div>
         </div>
       </div>
     </div>

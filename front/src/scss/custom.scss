@@ -14,16 +14,13 @@ body {
     padding: 0%;
 }
 
-#app {
-    
-}
-
 .btn {
     background-color: $secondarycolor;
     border: $primarycolor;
     color: $tertiarycolor;
     &:hover{
         background-color: $primarycolor;
+        color: white;
     }
 }
 
@@ -34,4 +31,10 @@ body {
 
 .info-data {
     margin-right: 15px;
+    flex: 0.8 1 0;
+}
+
+h5 {
+    text-decoration: underline $primarycolor;
+    text-underline-offset: 2px;
 }

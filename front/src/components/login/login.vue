@@ -87,7 +87,7 @@ const eventBus = require('../../helpers/event-bus')
     justify-content: center;
 }
 
-@media (max-width : 700px) {
+@media (max-width: 500px) {
     .form-item{
         flex-direction: column;
     }

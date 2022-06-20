@@ -1,10 +1,10 @@
 <template>
     <div id="DeleteArticle">
         <div v-if="!confirmation">
-            <p>Are you sure you want to delete this article ?</p>
+            <p>{{ localization.deletequestion }}</p>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" @click="deleteArticle()">Delete</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ localization.cancelbtn }}</button>
+                <button type="button" class="btn btn-primary" @click="deleteArticle()">{{ localization.deletebtn }}</button>
             </div>
         </div>
         <div v-if="confirmation" class="confirmation">

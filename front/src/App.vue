@@ -137,10 +137,6 @@ export default {
     text-decoration: underline $primarycolor;
   }
 
-  h5 {
-    text-decoration: underline $primarycolor;
-  }
-
   #username {
     margin-top: 17px;
     color: $primarycolor;

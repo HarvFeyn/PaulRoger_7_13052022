@@ -1,6 +1,5 @@
 const addArticle = 'Créer un nouvel article'
 const modArticle = 'Modifier un article'
-const save = 'sauvegarder'
 const articleCreatedSuccess = 'Article créé !'
 const articleModifySuccess = 'Article modifié'
 const articleDeletedSuccess = 'Article supprimé'
@@ -14,11 +13,15 @@ const enteremail = 'Entrez votre email : '
 const enterpassword = 'Entrez votre mot de passe : '
 const enterlogin = 'Email : '
 const entermdp = 'Mot de passe : '
+const deletebtn = 'Supprimer'
+const deletequestion = 'êtes-vous sûr de vouloir supprimer cet article ?'
+const cancelbtn = 'Annuler'
+const modifybtn = 'Modifier'
+const savebtn = 'Sauvegarder'
 
 module.exports = {
   addArticle,
   modArticle,
-  save,
   articleCreatedSuccess,
   articleModifySuccess,
   articleDeletedSuccess,
@@ -31,5 +34,10 @@ module.exports = {
   enteremail,
   enterpassword,
   enterlogin,
-  entermdp
+  entermdp,
+  deletebtn,
+  deletequestion,
+  cancelbtn,
+  modifybtn,
+  savebtn
 }

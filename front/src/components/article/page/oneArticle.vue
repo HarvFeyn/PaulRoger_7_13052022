@@ -17,8 +17,8 @@
               </div>
             </div>
             <p class="card-text">Posté le : {{article.date.split('T')[0]}}</p>
-            <button type="button" class="btn btn-modif" data-bs-toggle="modal" data-bs-target="#modal" v-if="canModify()" @click="modifArticle()">Modify</button>
-            <button type="button" class="btn btn-modif" data-bs-toggle="modal" data-bs-target="#modal" v-if="canModify()" @click="deleteArticle()">Delete</button>
+            <button type="button" class="btn btn-modif" data-bs-toggle="modal" data-bs-target="#modal" v-if="canModify()" @click="modifArticle()">{{ localization.modifybtn }}</button>
+            <button type="button" class="btn btn-modif" data-bs-toggle="modal" data-bs-target="#modal" v-if="canModify()" @click="deleteArticle()">{{ localization.deletebtn }}</button>
           </div>
         </div>
       </div>
@@ -27,6 +27,7 @@
 
 <script>
 import api from '../../API/article'
+const localization = require('../../../helpers/localization')
 
 export default {
   name: 'oneArticle',
@@ -36,7 +37,8 @@ export default {
         date: ""
       },
       component: undefined,
-      isForm: true
+      isForm: true,
+      localization
     }
   },
   computed: {
@@ -194,10 +196,23 @@ img {
 }
 
 .card-like {
-  margin: 5px;
+  margin: 10px;
   display: flex;
   text-align: center;
   justify-content: space-around;
+
+  i {
+    font-size: 20px;
+  }
+
+  #thumbdisliked {
+    margin-top: 7px;
+  }
+
+  p {
+    margin: 10px;
+    margin-top: 4px;
+  }
 }
 
 .card-text {
