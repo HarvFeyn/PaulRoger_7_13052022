@@ -17,6 +17,7 @@ import Modal from '../modal.vue'
 import IndexArticle from '../article/page/indexArticle.vue'
 import { mapState } from 'vuex'
 import api from '../API/article'
+const eventBus = require('../../helpers/event-bus')
 
   export default {
     name: 'Home',
@@ -36,6 +37,13 @@ import api from '../API/article'
       goToArticleRouteId (id) {
         console.log(id)
         this.$router.replace({ name: 'article', params: { id } })
+      },
+      reloadHome () {
+        api.getAllArticle()
+          .then(dataApi => {
+              this.articles = dataApi.data.result
+            }
+          )
       }
     },
     beforeRouteEnter (to, from, next) {
@@ -47,7 +55,16 @@ import api from '../API/article'
             })
           }
         )
-    }
+    },
+    mounted() {
+      eventBus.$on('reload-page', () => {
+        console.log('reload page')
+        this.reloadHome()
+      })
+    },
+    beforeDestroy() {
+      eventBus.$off('reload-page')
+    },
   }
 </script>
 

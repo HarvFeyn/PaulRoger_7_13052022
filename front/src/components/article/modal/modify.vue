@@ -110,27 +110,24 @@ export default {
                 .catch(reason => {
                     this.errorApiMessage = reason
                 })
+        },
+        loadArticle (id) {
+            apiArticle.getOneArticle(id)
+                .then(article => {
+                    this.title = article.data.result[0].title
+                    this.content = article.data.result[0].text
+                    this.titleCheck()
+                })
         }
-    },
-    mounted() {
-        apiArticle.getOneArticle(this.articleId)
-            .then(article => {
-                this.title = article.data.result[0].title
-                this.content = article.data.result[0].text
-                this.titleCheck()
-            })
     },
     created() {
         console.log("ModifyArticle created")
         eventBus.$on('show-modal-ModifyArticle', value => {
             console.log('ModifyArticle - eventBus.$on(show-modal)')
             this.reset()
-            apiArticle.getOneArticle(this.articleId)
-                .then(article => {
-                    this.title = article.data.result[0].title
-                    this.content = article.data.result[0].text
-                    this.titleCheck()
-                })
+            if (this.articleId) {
+                this.loadArticle(this.articleId)
+            }
         })
     },
     beforeDestroy () {

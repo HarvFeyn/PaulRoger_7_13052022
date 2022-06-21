@@ -28,6 +28,7 @@
 <script>
 import api from '../../API/article'
 const localization = require('../../../helpers/localization')
+const eventBus = require('../../../helpers/event-bus')
 
 export default {
   name: 'oneArticle',
@@ -115,7 +116,8 @@ export default {
       }
 
       else {
-        this.$parent.login(this.article.id)
+        this.openModalLogin()
+        return
       }
     },
     dislikeArticle () {
@@ -132,7 +134,8 @@ export default {
       }
 
       else {
-        this.$parent.login(this.article.id)
+        this.openModalLogin()
+        return
       }
     },
     changelikecolor () {
@@ -150,7 +153,10 @@ export default {
         document.getElementById("thumbdisliked").style.color = "black"
         document.getElementById("thumbliked").style.color = "black"
       }
-    }
+    },
+    openModalLogin () {
+      eventBus.$emit('login-modal-opened')
+    },
   },
   beforeCreate () {
       api.getOneArticle(this.$route.params.id)
@@ -160,7 +166,7 @@ export default {
       )
   },
   updated() {
-    this.changelikecolor() 
+    this.changelikecolor()
   }
 }
 </script>

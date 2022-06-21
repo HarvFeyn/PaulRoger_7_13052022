@@ -35,6 +35,7 @@ import DeleteArticle from './components/article/modal/delete.vue'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import { mapState } from 'vuex'
 const localization = require('./helpers/localization')
+const eventBus = require('./helpers/event-bus')
 
 export default {
   name: 'App',
@@ -80,8 +81,20 @@ export default {
       this.articleId = id
     },
     reload () {
-      
     }
+  },
+  updated () {
+    console.log('updated lifecycle - home')
+    const pImages = document.querySelectorAll('.content p img')
+    const styleAvailable = navigator.userAgent.includes('Firefox') ? '-moz-available' : '-webkit-fill-available'
+    pImages.forEach(image => {
+      image.style.maxWidth = styleAvailable
+    })
+  },
+  mounted () {
+    eventBus.$on('login-modal-opened', value => {
+      this.login()
+    })
   }
 }
 </script>

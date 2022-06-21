@@ -10,7 +10,7 @@
                 <vue-editor id="vue-editor" v-model="content" use-custom-image-handler :editor-toolbar="customToolbar" placeholder="Saisissez le contenu de l'article ici" @image-added="handleImageAdded" @text-change="textChange"/>
             </div>
             <div class="row mb-3 form-footer">
-                <button id="btn-register-submit" type="submit" class="btn btn-primary" :class="isValid ? '' : 'disabled'">{{ localization.save }}</button>
+                <button id="btn-register-submit" type="submit" class="btn btn-primary" :class="isValid ? '' : 'disabled'">{{ localization.savebtn }}</button>
             </div>
         </form>
         <div v-if="confirmation" class="confirmation">
@@ -101,6 +101,7 @@ export default {
             apiArticle.createArticle(data.title, data.content, data.name, data.authorId, this.$store.state.user.token)
                 .then(result => {
                     this.confirmation = true
+                    eventBus.$emit('reload-page')
                 }).catch(reason => {
                     this.errorApiMessage = reason
                 })
@@ -117,6 +118,7 @@ export default {
     beforeDestroy () {
         console.log('beforeDestroy article')
         eventBus.$off('show-modal-Article')
+        eventBus.$off('reload-page')
     }
 }
 </script>

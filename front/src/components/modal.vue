@@ -26,10 +26,6 @@ export default {
   name: 'Modal',
   components: {},
   props: {
-    options: {
-      type: Object,
-      required: false
-    },
     isForm: {
       type: Boolean,
       default: false
@@ -46,12 +42,6 @@ export default {
       type: Number
     }
   },
-  watch: {
-    options: function (newVal, oldVal) { // watch it
-      // Apply new configuration option to current modal instance
-      this.modal._config = this.options
-    }
-  },
   data () {
     return {
       modal: undefined
@@ -60,8 +50,8 @@ export default {
   mounted () {
     console.log("modal mounted")
     const modalEl = document.getElementById('modal')
-    // Create new Modal Instance and apply configuration options
-    this.modal = new Modal(modalEl, this.options)
+    // Create new Modal Instance
+    this.modal = new Modal(modalEl)
     modalEl.addEventListener('show.bs.modal', event => {
       if (this.component) {
         console.log(this.component.name)
