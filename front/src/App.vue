@@ -30,7 +30,6 @@ import Register from './components/register/register.vue'
 import Login from './components/login/login.vue'
 import Modal from './components/modal.vue'
 import Article from './components/article/modal/article.vue'
-import ModifyArticle from './components/article/modal/modify.vue'
 import DeleteArticle from './components/article/modal/delete.vue'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import { mapState } from 'vuex'
@@ -69,9 +68,10 @@ export default {
     article () {
       this.component = Article
       this.isForm = true
+      this.articleId = undefined
     },
     modifyArticle (id) {
-      this.component = ModifyArticle
+      this.component = Article
       this.isForm = true
       this.articleId = id
     },

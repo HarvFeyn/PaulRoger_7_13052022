@@ -42,6 +42,7 @@ export default {
             apiArticle.deleteArticle(this.$store.state.user.id, this.articleId, this.$store.state.user.token)
                 .then(result => {
                     this.confirmation = true
+                    this.$router.replace({ name: 'Home' })
                 })
         }
     },
