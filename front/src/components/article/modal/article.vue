@@ -32,6 +32,12 @@ export default {
     components: {
         VueEditor
     },
+    props: {
+        articleId: {
+            type: Number,
+            require: false
+        }
+    },
     data() {
         return this.initialData()
     },
@@ -98,12 +104,34 @@ export default {
                 authorId: this.$store.state.user.id
             }
 
-            apiArticle.createArticle(data.title, data.content, data.name, data.authorId, this.$store.state.user.token)
-                .then(result => {
-                    this.confirmation = true
-                    eventBus.$emit('reload-page')
-                }).catch(reason => {
-                    this.errorApiMessage = reason
+            if (this.articleId) {
+                apiArticle.modifyArticle(this.$store.state.user.id, data.title, data.content, data.name, this.articleId, this.$store.state.user.token)
+                    .then(result => {
+                        console.log(result)
+                        this.confirmation = true
+                        eventBus.$emit('reload-page')
+                    })
+                    .catch(reason => {
+                        this.errorApiMessage = reason
+                    })
+            }
+
+            else {
+                apiArticle.createArticle(data.title, data.content, data.name, data.authorId, this.$store.state.user.token)
+                    .then(result => {
+                        this.confirmation = true
+                        eventBus.$emit('reload-page')
+                    }).catch(reason => {
+                        this.errorApiMessage = reason
+                    })
+            }
+        },
+        loadArticle (id) {
+            apiArticle.getOneArticle(id)
+                .then(article => {
+                    this.title = article.data.result[0].title
+                    this.content = article.data.result[0].text
+                    this.titleCheck()
                 })
         }
     },
@@ -113,6 +141,9 @@ export default {
         eventBus.$on('show-modal-Article', value => {
             console.log('article - eventBus.$on(show-modal)')
             this.reset()
+            if (this.articleId) {
+                this.loadArticle(this.articleId)
+            }
         })
     },
     beforeDestroy () {

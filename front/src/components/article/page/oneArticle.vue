@@ -86,8 +86,7 @@ export default {
         .then(article => {
             this.article = article.data.result[0]
             this.changelikecolor()
-          }
-      )
+          })
     },
     modifArticle () {
       this.$parent.modifyArticle(this.article.id)
@@ -165,8 +164,18 @@ export default {
         }
       )
   },
+  mounted() {
+    eventBus.$on('reload-page', () => {
+      console.log('reload page')
+      this.callApi()
+    })
+  },
   updated() {
     this.changelikecolor()
+  },
+  beforeDestroy() {
+    eventBus.$off('reload-page')
+    eventBus.$off('login-modal-opened')
   }
 }
 </script>
