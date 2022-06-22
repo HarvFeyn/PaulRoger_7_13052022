@@ -1,26 +1,26 @@
 <template>
     <div id="register">
         <form v-if="!confirmation" @submit="submitRegister" class="form-register">
-            <h3>Register :</h3>
-            <div class="form-register">
-                <label for="name">Enter your name: </label>
+            <h3>{{ localization.register }}</h3>
+            <div class="form-item">
+                <label class="info-data" for="name">{{ localization.entername }}</label>
                 <input type="text" name="name" id="name" required>
             </div>
-            <div class="form-register">
-                <label for="email">Enter your email: </label>
+            <div class="form-item">
+                <label class="info-data" for="email">{{ localization.enteremail }}</label>
                 <input type="email" name="email" id="email" required>
             </div>
-            <div class="form-register">
-                <label for="password">Enter your password: </label>
+            <div class="form-item">
+                <label class="info-data" for="password">{{ localization.enterpassword }}</label>
                 <input type="password" name="password" id="password" required>
             </div>
             <div class="row mb-3">
-                <button type="submit" class="btn btn-primary">Register</button>
+                <button type="submit" class="btn btn-primary">{{ localization.register }}</button>
                 <p>{{ messageSubmit }}</p>
             </div>
         </form>
         <div v-if="confirmation" class="confirmation">
-            {{ localization.register }}
+            <p>{{ localization.registermsg }}</p>
         </div>
     </div>
 </template>
@@ -50,7 +50,9 @@ const eventBus = require('../../helpers/event-bus')
                 event.preventDefault()
                 auth.signup({name: event.target.elements.name.value, email: event.target.elements.email.value, password: event.target.elements.password.value})
                     .then(result => {
+                        console.log("plop")
                         this.confirmation = true
+                        console.log(this.confirmation)
                     })
                     .catch(error => {this.messageSubmit='Nom ou email déjà utilisé.'})
             }
@@ -72,9 +74,26 @@ const eventBus = require('../../helpers/event-bus')
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 .btn {
     margin-top: 10px;
 }
 
+.form-register {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-item {
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+@media (max-width : 500px) {
+    .form-item{
+        flex-direction: column;
+    }
+}
 </style>

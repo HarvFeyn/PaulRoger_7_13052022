@@ -2,17 +2,15 @@
     <div id="app">
       <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
-          <router-link class="navbar-brand" to="/">Groupomania</router-link>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarLogReg">
-            <div class="navbar-nav ms-auto">
-              <button type="button" class="btn btn-nav" data-bs-toggle="modal" data-bs-target="#modal" @click="login()" v-if="!authenticated">Login</button>
-              <button type="button" class="btn btn-nav" data-bs-toggle="modal" data-bs-target="#modal" @click="register()" v-if="!authenticated">Register</button>
-              <button type="button" class="btn btn-nav" data-bs-toggle="modal" data-bs-target="#modal" @click="article()" v-if="authenticated">Create new article</button>
-              <button type="button" class="btn btn-nav" @click="logout()" v-if="authenticated">Logout</button>
-            </div>
+          <router-link class="navbar-brand" to="/" @click="reload()">
+            <img id="logogroupomania" alt="logo de groupomania" src="./assets/img/Groupomania Logos (update 2022)/icon-left-font-monochrome-black.png">
+          </router-link>
+          <div class="navbar-nav">
+            <p id="username" v-if="authenticated">{{$store.state.user.name}}</p>
+            <button type="button" class="btn btn-nav" data-bs-toggle="modal" data-bs-target="#modal" @click="login()" v-if="!authenticated">{{localization.login}}</button>
+            <button type="button" class="btn btn-nav" data-bs-toggle="modal" data-bs-target="#modal" @click="register()" v-if="!authenticated">{{localization.register}}</button>
+            <button type="button" class="btn btn-nav" data-bs-toggle="modal" data-bs-target="#modal" @click="article()" v-if="authenticated">{{localization.newarticle}}</button>
+            <button type="button" class="btn btn-nav" @click="logout()" v-if="authenticated">Déconnection</button>
           </div>
         </div>
       </nav>
@@ -32,10 +30,11 @@ import Register from './components/register/register.vue'
 import Login from './components/login/login.vue'
 import Modal from './components/modal.vue'
 import Article from './components/article/modal/article.vue'
-import ModifyArticle from './components/article/modal/modify.vue'
 import DeleteArticle from './components/article/modal/delete.vue'
-
+import 'bootstrap-icons/font/bootstrap-icons.css'
 import { mapState } from 'vuex'
+const localization = require('./helpers/localization')
+const eventBus = require('./helpers/event-bus')
 
 export default {
   name: 'App',
@@ -46,7 +45,8 @@ export default {
     return {
       component: undefined,
       isForm: true,
-      articleId: undefined
+      articleId: undefined,
+      localization
     }
   },
   computed: {
@@ -68,9 +68,10 @@ export default {
     article () {
       this.component = Article
       this.isForm = true
+      this.articleId = undefined
     },
     modifyArticle (id) {
-      this.component = ModifyArticle
+      this.component = Article
       this.isForm = true
       this.articleId = id
     },
@@ -78,7 +79,22 @@ export default {
       this.component = DeleteArticle
       this.isForm = true
       this.articleId = id
+    },
+    reload () {
     }
+  },
+  updated () {
+    console.log('updated lifecycle - home')
+    const pImages = document.querySelectorAll('.content p img')
+    const styleAvailable = navigator.userAgent.includes('Firefox') ? '-moz-available' : '-webkit-fill-available'
+    pImages.forEach(image => {
+      image.style.maxWidth = styleAvailable
+    })
+  },
+  mounted () {
+    eventBus.$on('login-modal-opened', value => {
+      this.login()
+    })
   }
 }
 </script>
@@ -98,8 +114,24 @@ export default {
     color: $tertiarycolor;
     margin: 0px;
     padding: 0px;
-    background-color: $tertiarycolor;
-    height: 100%;
+  }
+
+  .navbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .container-fluid {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .navbar-nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
   }
 
   .btn-nav {
@@ -110,4 +142,29 @@ export default {
     margin: 25px;
   }
 
+  #logogroupomania {
+    max-width: 150px;
+  }
+
+  form > h3 {
+    text-decoration: underline $primarycolor;
+  }
+
+  #username {
+    margin-top: 17px;
+    color: $primarycolor;
+    text-decoration: bold;
+  }
+
+  @media (max-width : 700px) {
+    .container-fluid {
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .navbar-nav {
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
 </style>

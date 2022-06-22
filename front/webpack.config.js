@@ -52,7 +52,7 @@ const config = {
       title: 'Groupomania',
       filename: 'index.html',
       inject: true,
-      template: path.join(setPath('./public'), 'index.html'),
+      template: path.join(setPath('src'), 'index.html'),
       isLocalBuild: buildingForLocal()
     }),
     // extractCSS,

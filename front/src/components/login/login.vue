@@ -1,17 +1,17 @@
 <template>
     <div id="login">
         <form v-if="!confirmation" @submit="login" class="form-register">
-            <h3>Login :</h3>
-            <div class="form-register">
-                <label for="email">Enter your email: </label>
+            <h3>{{ localization.login }}</h3>
+            <div class="form-item">
+                <label class="info-data" for="email">{{ localization.enterlogin }}</label>
                 <input type="email" name="email" id="email" required>
             </div>
-            <div class="form-register">
-                <label for="password">Enter your password: </label>
+            <div class="form-item">
+                <label class="info-data" for="password">{{ localization.entermdp }}</label>
                 <input type="password" name="password" id="password" required>
             </div>
             <div class="row mb-3">
-                <button type="submit" class="btn btn-primary">Login</button>
+                <button type="submit" class="btn btn-primary">{{ localization.login }}</button>
                 <p>{{ messageSubmit }}</p>
             </div>
         </form>
@@ -74,4 +74,22 @@ const eventBus = require('../../helpers/event-bus')
     margin-top: 10px;
 }
 
+.form-register {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-item {
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+@media (max-width: 500px) {
+    .form-item{
+        flex-direction: column;
+    }
+}
 </style>

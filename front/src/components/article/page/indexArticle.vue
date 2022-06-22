@@ -3,9 +3,11 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">{{ value.title }}</h5>
-          <h6 class="card-subtitle mb-2 text-muted">Author : {{ value.author }}</h6>
+          <h6 class="card-subtitle mb-2 text-muted">Auteur : {{ value.author }}</h6>
           <div class="card-content" v-html="value.text"></div>
-          <p class="card-text">Posté le : {{ value.date.split('T')[0] }}</p>
+          <div class="card-footer">
+            <p class="card-text">Posté le : {{value.date.split('T')[0]}}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -19,11 +21,11 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style scoped lang="scss">
 .card{
     width: 100%;
     margin-top: 20px;
-    height: 333px;
+    max-height: 350px;
 }
 
 .card-body {
@@ -35,6 +37,7 @@ export default {
 
 .card-content {
     overflow: hidden;
+    margin-bottom: 15px;
 }
 
 </style>

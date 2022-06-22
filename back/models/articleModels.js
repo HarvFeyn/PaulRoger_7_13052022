@@ -33,7 +33,7 @@ exports.deleteArtcile = (id) => {
 };
 
 exports.modifyArticle = (id, article) => {
-    return query("UPDATE article SET title='" + article.title + "', text='" + article.text + "' WHERE id = '" + id + "'")
+    return query(`UPDATE article SET title='${article.title}', text= '${article.text}' WHERE id = '${id}'`)
         .then(() => {
             console.log('article modify')
             return {message: "ok"}
